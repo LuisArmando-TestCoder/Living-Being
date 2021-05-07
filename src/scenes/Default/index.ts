@@ -7,4 +7,8 @@ export default id => presetScene({
             'setCanvasAutoFocus',
         ], `#${id}`)
     },
+    animate({scene}) {
+        scene.getObjectByName('SimpleFloor').visible = false
+        scene.getObjectByName('SimpleCube').visible = false
+    }
 }, `#${id}`)
