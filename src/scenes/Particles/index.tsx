@@ -1,14 +1,20 @@
+import * as THREE from 'three'
 import presetScene from 'scene-preset'
 import * as objects from '../../objects'
 
-const cubes = objects.L1.getCubes([{x: 0, y: 0, z: 0, color: '#000', size: 1}])
-const prisms = objects.L1.getPrisms([{x: 0, y: 2, z: 0, color: '#000', size: 1}])
+const videoFramePixels = objects.L2.getVideoFramePixels(
+    '../../videos/capture.mp4',
+    {
+        position: new THREE.Vector3(-10, -10, 50),
+        pixelSize: 10,
+        modifier: (position: THREE.Vector3, index: number, time: number) => {
+            position.z = index / 5 + Math.sin(time)
+        }
+    }
+)
 
 export default id => presetScene({
     setup({scene}) {
-        scene.add(cubes as any)
-        scene.add(prisms as any)
+        scene.add(videoFramePixels as any)
     },
-    animate() {
-    }
 }, `#${id}`)
