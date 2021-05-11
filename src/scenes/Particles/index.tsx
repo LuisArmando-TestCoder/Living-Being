@@ -5,10 +5,15 @@ import * as objects from '../../objects'
 const videoFramePixels = objects.L2.getVideoFramePixels(
     '../../videos/capture.mp4',
     {
-        position: new THREE.Vector3(-10, -10, 50),
+        position: new THREE.Vector3(0, 0, -200),
         pixelSize: 10,
         modifier: (position: THREE.Vector3, index: number, time: number) => {
-            position.z = index / 5 + Math.sin(time)
+            const fraction = 5
+            const radius = 20
+
+            position.z = index / fraction
+            position.x = Math.sin(index / fraction + time) * radius
+            position.y = Math.cos(index / fraction + time) * radius
         }
     }
 )

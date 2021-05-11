@@ -81,7 +81,7 @@ function setGroupPixels({group, pixelSize}) {
 
 function changePixelsGroup({group, pixelSize, modifier}) {
     const pixels = getPixels({pixelSize})
-    const time = Date.now() / 1e3
+    const time = Date.now() / 1e4
 
     group.children.forEach((cubicPixel, index) => {
         cubicPixel.position.set(
