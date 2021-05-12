@@ -90,7 +90,7 @@ function changePixelsGroup({group, pixelSize, modifier}) {
             cubicPixel?.['original']?.position?.z
         )
 
-        modifier(cubicPixel.position, index, time)
+        modifier(cubicPixel, index, time)
 
         cubicPixel?.material?.color?.setStyle(
             pixels?.[index]?.color
@@ -110,7 +110,7 @@ export default ({
     group: THREE.Group,
     url: string,
     pixelSize: number,
-    modifier: (position: THREE.Vector3, index: number, time: number) => void
+    modifier: (mesh: THREE.Object3D, index: number, time: number) => void
 }) => {
     const video = document.createElement('video')
 

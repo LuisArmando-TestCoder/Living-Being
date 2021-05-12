@@ -6,7 +6,7 @@ export default (
     configuration: {
         position: THREE.Vector3,
         pixelSize: number
-        modifier: (position: THREE.Vector3, index: number, time: number) => void
+        modifier: (mesh: THREE.Object3D, index: number, time: number) => void
     }
 ): THREE.Group =>  {
     const group = new THREE.Group()
