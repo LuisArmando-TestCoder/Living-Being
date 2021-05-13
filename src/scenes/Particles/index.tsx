@@ -9,10 +9,10 @@ export default id => presetScene({
             '../../videos/capture.mp4',
             '../../audios/Natural.mp3',
             {
-                position: new THREE.Vector3(0, 0, -200),
+                position: new THREE.Vector3(0, 0, 0),
                 pixelSize: 15,
                 modifier: (mesh: THREE.Object3D, index: number, time: number, frequencies) => {
-                    const fraction = 1.5
+                    const fraction = 10
                     const radius = 20
 
                     mesh.position.x = Math.sin(index / fraction + time) * radius
@@ -24,7 +24,7 @@ export default id => presetScene({
 
                     const scaledFrequency = frequencies[index] / 256
 
-                    mesh.scale.set(1, scaledFrequency, 1)
+                    mesh.scale.set(.1 + scaledFrequency / 2, .1 + scaledFrequency / 4, 1)
                 }
             }
         )
