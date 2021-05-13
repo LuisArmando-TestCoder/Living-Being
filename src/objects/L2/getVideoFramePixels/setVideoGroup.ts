@@ -1,3 +1,4 @@
+import {consulters} from 'scene-preset'
 import * as objects from '../..'
 
 const canvas = document.createElement('canvas')
@@ -72,14 +73,14 @@ function getPixels({
 
 function setGroupPixels({group, pixelSize}) {
     const pixels = getPixels({pixelSize})
-    const cubicPixels = objects.L1.getCubes(pixels)
+    const cubicPixels = objects.L1.getPrisms(pixels)
 
     cubicPixels.children.forEach(cubicPixel => {
         group.add(cubicPixel)
     })
 }
 
-function changePixelsGroup({group, pixelSize, modifier}) {
+function changePixelsGroup({group, pixelSize, modifier, audioProperties}) {
     const pixels = getPixels({pixelSize})
     const time = Date.now() / 1e4
 
@@ -90,7 +91,7 @@ function changePixelsGroup({group, pixelSize, modifier}) {
             cubicPixel?.['original']?.position?.z
         )
 
-        modifier(cubicPixel, index, time)
+        modifier(cubicPixel, index, time, audioProperties.frequencies)
 
         cubicPixel?.material?.color?.setStyle(
             pixels?.[index]?.color
@@ -105,14 +106,16 @@ function frame() {
 }
 
 export default ({
-    group, url, pixelSize, modifier
+    group, url, audio, pixelSize, modifier
 }: {
     group: THREE.Group,
     url: string,
+    audio: HTMLAudioElement,
     pixelSize: number,
-    modifier: (mesh: THREE.Object3D, index: number, time: number) => void
+    modifier: (mesh: THREE.Object3D, index: number, time: number, frequencies) => void
 }) => {
     const video = document.createElement('video')
+    const audioProperties = consulters.getAudioProperties(audio)
 
     video.src = url
     video.loop = false
@@ -122,14 +125,23 @@ export default ({
             video.loop = true
             canvas.width = video.videoWidth
             canvas.height = video.videoHeight
-    
-            
+
             setGroupPixels({group, pixelSize})
-            
-            frame.call({video, group, pixelSize, modifier})
-            
+            frame.call({video, group, pixelSize, modifier, audioProperties})
             window.addEventListener('click', () => {
                 (video.paused ? video.play : video.pause).call(video)
+            })
+        }
+    })
+
+    audio.loop = false
+
+    audio.addEventListener('canplay', () => {
+        if (!audio.loop) {
+            audio.loop = true
+
+            window.addEventListener('click', () => {
+                (audio.paused ? audio.play : audio.pause).call(audio)
             })
         }
     })
