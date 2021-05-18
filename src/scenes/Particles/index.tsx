@@ -1,10 +1,9 @@
 import * as THREE from 'three'
-import presetScene, {consulters} from 'scene-preset'
+import presetScene from 'scene-preset'
 import * as objects from '../../objects'
 
 export default id => presetScene({
     setup({scene}) {
-
         const videoFramePixels = objects.L2.getVideoFramePixels(
             '../../videos/capture.mp4',
             '../../audios/Natural.mp3',
